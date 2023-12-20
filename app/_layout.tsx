@@ -6,6 +6,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { useEffect, useRef } from 'react';
 
 import * as Updates from 'expo-updates';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { AppState } from 'react-native';
@@ -93,26 +94,28 @@ function RootLayoutNav() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'light' ? LIGHT_THEME : DARK_THEME}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <SafeAreaProvider>
-        <BottomSheetModalProvider>
-          <Stack initialRouteName='(main)'>
-            <Stack.Screen
-              name='(main)'
-              options={{
-                headerShown: false,
-              }}
-            />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === 'light' ? LIGHT_THEME : DARK_THEME}>
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+        <SafeAreaProvider>
+            <BottomSheetModalProvider>
+              <Stack initialRouteName='(main)'>
+                <Stack.Screen
+                  name='(main)'
+                  options={{
+                    headerShown: false,
+                  }}
+                />
 
-            <Stack.Screen
-              name='modal'
-              options={{ presentation: 'modal', title: 'Modal' }}
-            />
-          </Stack>
-        </BottomSheetModalProvider>
-      </SafeAreaProvider>
-    </ThemeProvider>
+                <Stack.Screen
+                  name='modal'
+                  options={{ presentation: 'modal', title: 'Modal' }}
+                />
+              </Stack>
+            </BottomSheetModalProvider>
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
